@@ -29,20 +29,31 @@
         </LinkTo>
       {{/if}}
     {{/if}}
-    {{#if this.showSessions}}
+    {{#if (and this.showSessions this.isSchedulePublished)}}
       <LinkTo @route="public.sessions" class="item">
-        {{t 'Sessions'}}
+        {{t 'Schedule'}}
       </LinkTo>
     {{/if}}
-    {{#if this.isSchedulePublished}}
+    {{#if (and this.showSessions this.isSchedulePublished)}}
       <LinkTo @route="public.schedule" class="item">
-        {{t 'Schedule'}}
+        {{t 'Calendar'}}
       </LinkTo>
     {{/if}}  
     {{#if this.shouldShowCallforSpeakers }}
       <LinkTo @route="public.cfs" class="item">
         {{t 'Call for Speakers'}}
       </LinkTo>
+    {{/if}}
+    {{#if this.event.isSponsorsEnabled}}
+      {{#if (eq this.session.currentRouteName 'public.index')}}
+        <a href='#sponsor' {{action "scrollToTarget"}} class='item scroll'>
+          {{t 'Sponsors'}}
+        </a>
+      {{else}}
+        <a class="item" href="{{href-to 'public.index'}}#sponsor">
+          {{t 'Sponsors'}}
+        </a>
+      {{/if}}
     {{/if}}
     {{#if this.event.hasOwnerInfo}}
       {{#if (eq this.session.currentRouteName 'public.index')}}
